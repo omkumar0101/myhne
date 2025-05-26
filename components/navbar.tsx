@@ -55,10 +55,11 @@ export default function Navbar() {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16 md:h-20">
           <div className="flex items-center">
-            <Link href="/" className="flex items-center">
-              <span className="text-xl md:text-2xl font-bold text-[#9FFFE0]">
-                NEUROX
-              </span>
+            <Link href="/" className="flex items-center space-x-2">
+              <div className="h-8 w-8 rounded-full bg-[#9FFFE0] flex items-center justify-center">
+                <span className="text-[#0B1211] font-bold text-sm">N</span>
+              </div>
+              <span className="text-xl font-bold text-[#9FFFE0]">HYPER NEUROX</span>
             </Link>
           </div>
 

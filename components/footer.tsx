@@ -8,7 +8,7 @@ export default function Footer() {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
           <div>
-            <h3 className="text-xl font-bold text-[#9FFFE0] mb-4">NEUROX</h3>
+            <h3 className="text-xl font-bold text-[#9FFFE0] mb-4">HYPER NEUROX</h3>
             <p className="mb-4">Where AI meets relaxation in the crypto space.</p>
           </div>
 
@@ -74,7 +74,7 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-[#9FFFE0]/30 mt-8 md:mt-12 pt-6 md:pt-8 text-center">
-          <p className="text-sm">&copy; {new Date().getFullYear()} Neurox. All rights reserved.</p>
+          <p className="text-sm">&copy; {new Date().getFullYear()} Hyper Neurox. All rights reserved.</p>
         </div>
       </div>
     </footer>

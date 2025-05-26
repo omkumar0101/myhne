@@ -15,7 +15,7 @@ export default function TokenDistribution() {
             </div>
             <div>
               <h3 className="text-xl font-bold text-[#9FFFE0] mb-1">Total Supply</h3>
-              <p className="text-2xl font-bold text-[#9FFFE0]">1,000,000,000 $NEUROX</p>
+              <p className="text-2xl font-bold text-[#9FFFE0]">1,000,000,000 $HYPER NEUROX</p>
               <p className="text-[#9FFFE0]/70 mt-1">
                 Fixed supply with no additional tokens being minted, ensuring scarcity and long-term value.
               </p>
@@ -50,7 +50,7 @@ export default function TokenDistribution() {
               <h3 className="text-xl font-bold text-[#9FFFE0] mb-1">Transaction Tax</h3>
               <p className="text-2xl font-bold text-[#9FFFE0]">0% Buy / 0% Sell</p>
               <p className="text-[#9FFFE0]/70 mt-1">
-                Zero tax policy ensures that 100% of transactions go directly to buying or selling NEUROX tokens,
+                Zero tax policy ensures that 100% of transactions go directly to buying or selling HYPER NEUROX tokens,
                 maximizing value for holders.
               </p>
             </div>
@@ -66,7 +66,7 @@ export default function TokenDistribution() {
             <div>
               <h3 className="text-xl font-bold text-[#9FFFE0] mb-1">Community Incentives</h3>
               <p className="text-[#9FFFE0]/70">
-                Earn rewards through active participation and engagement in the NEUROX ecosystem. Community members are
+                Earn rewards through active participation and engagement in the HYPER NEUROX ecosystem. Community members are
                 rewarded for contributing to platform growth and development. (coming soon)
               </p>
             </div>
@@ -82,7 +82,7 @@ export default function TokenDistribution() {
             <div>
               <h3 className="text-xl font-bold text-[#9FFFE0] mb-1">Staking & Rewards</h3>
               <p className="text-[#9FFFE0]/70">
-                Users can stake $NEUROX tokens to earn passive income through our staking program. Longer staking
+                Users can stake $HYPER NEUROX tokens to earn passive income through our staking program. Longer staking
                 periods yield higher rewards, incentivizing long-term holding. (Coming Soon)
               </p>
             </div>

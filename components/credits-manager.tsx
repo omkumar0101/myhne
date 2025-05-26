@@ -21,7 +21,7 @@ import { NETWORK } from "@/constants/network"
 import { useWallet } from "@/contexts/wallet-context"
 
 // Update the token address and add ABI constants at the top of the file, after the imports
-const NRX_TOKEN_ADDRESS = "0x0000000000000000000000000000000000000000" // Replace with actual NEUROX BEP20 token contract address
+const NRX_TOKEN_ADDRESS = "0x0000000000000000000000000000000000000000" // Replace with actual HYPER NEUROX BEP20 token contract address
 const CREDIT_MANAGER_ADDRESS = "0x0000000000000000000000000000000000000000" // Replace with your credit manager contract address
 const ANONYMOUS_USER_KEY = "anonymousUserCredits"
 
@@ -256,7 +256,7 @@ export default function CreditsManager({ onCreditsChange }: CreditsManagerProps)
     if (onCreditsChange) onCreditsChange(newCredits)
   }
 
-  // Purchase credits with NEUROX BEP20 tokens
+  // Purchase credits with HYPER NEUROX BEP20 tokens
   const purchaseCredits = async () => {
     setError(null)
     setSuccess(null)
@@ -279,7 +279,7 @@ export default function CreditsManager({ onCreditsChange }: CreditsManagerProps)
     try {
       setIsPurchasing(true)
 
-      // Calculate total cost in NEUROX tokens
+      // Calculate total cost in HYPER NEUROX tokens
       const totalCost = purchaseAmount * 0.01 // creditPrice
 
       // Convert to wei (assuming 18 decimals for the token)
@@ -433,7 +433,7 @@ export default function CreditsManager({ onCreditsChange }: CreditsManagerProps)
                   <DialogHeader>
                     <DialogTitle className="text-[#9FFFE0]">Purchase Image Generation Credits</DialogTitle>
                     <DialogDescription className="text-[#9FFFE0]/70">
-                      Buy credits using NEUROX BEP20 tokens to generate more AI images
+                      Buy credits using HYPER NEUROX BEP20 tokens to generate more AI images
                     </DialogDescription>
                   </DialogHeader>
 

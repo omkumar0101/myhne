@@ -29,7 +29,7 @@ export default function AIChat() {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 1,
-      text: "Hello! I'm your NEUROX AI assistant. How can I help you relax today?",
+      text: "Hello! I'm your HYPER NEUROX AI assistant. How can I help you relax today?",
       sender: "ai",
       timestamp: new Date().toISOString(),
       role: "assistant",
@@ -77,7 +77,7 @@ export default function AIChat() {
     } else if (lowerMessage.includes("image") || lowerMessage.includes("generate") || lowerMessage.includes("ai")) {
       return "You can use our AI image generator to create calming visuals. Just describe what you'd like to see, and our AI will create it for you. This can be a great way to visualize peaceful scenes."
     } else if (lowerMessage.includes("token") || lowerMessage.includes("neurox") || lowerMessage.includes("buy")) {
-      return "NEUROX is our platform token that combines AI with mental wellness for crypto enthusiasts."
+      return "HYPER NEUROX is our platform token that combines AI with mental wellness for crypto enthusiasts."
     } else {
       // If no specific context is detected, use a random fallback response
       return getRandomFallbackResponse()
@@ -335,7 +335,7 @@ export default function AIChat() {
     setMessages([
       {
         id: Date.now(),
-        text: "Hello! I'm your NEUROX AI assistant. How can I help you relax today?",
+        text: "Hello! I'm your HYPER NEUROX AI assistant. How can I help you relax today?",
         sender: "ai",
         timestamp: new Date().toISOString(),
         role: "assistant",
@@ -355,7 +355,7 @@ export default function AIChat() {
           <div className="h-7 w-7 sm:h-8 sm:w-8 rounded-full bg-[#9FFFE0] flex items-center justify-center mr-2 sm:mr-3">
             <Bot className="h-3 w-3 sm:h-4 sm:w-4 text-[#0B1211]" />
           </div>
-          <h3 className="text-sm sm:text-base font-bold text-white">NEUROX AI Assistant</h3>
+          <h3 className="text-sm sm:text-base font-bold text-white">HYPER NEUROX AI Assistant</h3>
         </div>
         <Button
           variant="ghost"

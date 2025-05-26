@@ -113,7 +113,7 @@ export default function ConnectWalletButton() {
 
         // This will attempt to open the MetaMask app with a return URL
         // Using the universal link format for better compatibility
-        window.location.href = `https://metamask.app.link/dapp/${window.location.host}${window.location.pathname}?utm_source=neurox`
+        window.location.href = `https://metamask.app.link/dapp/${window.location.host}${window.location.pathname}?utm_source=hyper-neurox`
       }
       return
     }

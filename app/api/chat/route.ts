@@ -19,11 +19,11 @@ function safeJsonResponse(data: any, status = 200) {
 
 // Common responses for faster replies to frequent questions
 const QUICK_RESPONSES = {
-  hello: "Hello! I'm your NEUROX AI assistant. How can I help you relax today?",
+  hello: "Hello! I'm your HYPER NEUROX AI assistant. How can I help you relax today?",
   hi: "Hi there! How can I assist you with crypto or relaxation today?",
   "how are you": "I'm functioning well, thank you! How can I help you today?",
   "what is neurox":
-    "NEUROX is a platform that combines AI with mental wellness for crypto enthusiasts, offering tools to manage stress from market volatility while enjoying AI-powered creative experiences.",
+    "HYPER NEUROX is a platform that combines AI with mental wellness for crypto enthusiasts, offering tools to manage stress from market volatility while enjoying AI-powered creative experiences.",
   "what can you do":
     "I can help you generate AI images, provide relaxation tips, discuss crypto topics, and offer a friendly conversation to help you unwind.",
   help: "I can assist with generating images, provide relaxation techniques, discuss crypto topics, or just chat. What would you like to know about?",
@@ -45,8 +45,9 @@ const FALLBACK_RESPONSES = [
   "I'm experiencing some delays in my responses. While I'm sorting this out, why not try generating some relaxing AI images with our image generator?",
 ]
 
-// OpenRouter API key
-const OPENROUTER_API_KEY = "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"
+// Nebius API configuration
+const NEBIUS_API_KEY = "eyJhbGciOiJIUzI1NiIsImtpZCI6IlV6SXJWd1h0dnprLVRvdzlLZWstc0M1akptWXBvX1VaVkxUZlpnMDRlOFUiLCJ0eXAiOiJKV1QifQ.eyJzdWIiOiJnb29nbGUtb2F1dGgyfDExNDgwMDE2MTczODc2Mjk5ODk3MyIsInNjb3BlIjoib3BlbmlkIG9mZmxpbmVfYWNjZXNzIiwiaXNzIjoiYXBpX2tleV9pc3N1ZXIiLCJhdWQiOlsiaHR0cHM6Ly9uZWJpdXMtaW5mZXJlbmNlLmV1LmF1dGgwLmNvbS9hcGkvdjIvIl0sImV4cCI6MTkwNTk1ODYxNSwidXVpZCI6ImQxN2QyNGUxLTU4MGQtNDIyOC04NDJkLTU0MWZjOWQ0ZjI5YyIsIm5hbWUiOiJjaGF0IiwiZXhwaXJlc19hdCI6IjIwMzAtMDUtMjVUMTY6NTY6NTUrMDAwMCJ9.bVFOx3wQbCbDlMFK74bIkdYno7u5rkIEW0x0xUDWLGY"
+const NEBIUS_BASE_URL = "https://api.studio.nebius.com/v1/"
 
 export async function POST(request: Request) {
   try {
@@ -102,46 +103,55 @@ export async function POST(request: Request) {
     // Sanitize and validate messages - only send the last few messages to reduce token count
     const sanitizedMessages = messages.slice(-5).map((msg) => ({
       role: String(msg.role),
-      content: String(msg.content),
+      content: [
+        {
+          type: "text",
+          text: String(msg.content)
+        }
+      ]
     }))
 
     // Add system message for context
     sanitizedMessages.unshift({
       role: "system",
-      content:
-        "You are NEUROX AI, a helpful assistant specialized in crypto and relaxation. Keep responses brief, helpful, and focused on providing mental wellness tips for crypto traders and enthusiasts. Your goal is to help users manage stress and anxiety related to cryptocurrency market volatility.",
+      content: [
+        {
+          type: "text",
+          text: "You are HYPER NEUROX AI, a helpful assistant specialized in crypto and relaxation. Keep responses brief, helpful, and focused on providing mental wellness tips for crypto traders and enthusiasts. Your goal is to help users manage stress and anxiety related to cryptocurrency market volatility."
+        }
+      ]
     })
 
     try {
-      console.log("Preparing to send request to OpenRouter API")
+      console.log("Preparing to send request to Nebius API")
 
       // Use direct fetch with a timeout for production
       const controller = new AbortController()
       const timeoutId = setTimeout(() => {
         controller.abort()
-        console.log("Request to OpenRouter API timed out after 60 seconds")
+        console.log("Request to Nebius API timed out after 60 seconds")
       }, 60000) // 60 second timeout
 
-      console.log("Sending request to OpenRouter API")
-      const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+      console.log("Sending request to Nebius API")
+      const response = await fetch(`${NEBIUS_BASE_URL}chat/completions`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${OPENROUTER_API_KEY}`,
-          "HTTP-Referer": "https://neurox.io", // Replace with your actual site URL
-          "X-Title": "NEUROX AI Assistant", // Replace with your actual site name
+          Authorization: `Bearer ${NEBIUS_API_KEY}`,
         },
         body: JSON.stringify({
-          model: "deepseek/deepseek-r1:free",
+          model: "meta-llama/Meta-Llama-3.1-8B-Instruct",
+          max_tokens: 512,
+          temperature: 0.6,
+          top_p: 0.9,
+          top_k: 50,
           messages: sanitizedMessages,
-          max_tokens: 256, // Limit response length for faster responses
-          temperature: 0.7,
         }),
         signal: controller.signal,
       })
 
       clearTimeout(timeoutId)
-      console.log(`OpenRouter API response status: ${response.status}`)
+      console.log(`Nebius API response status: ${response.status}`)
 
       // Check if the response is ok
       if (!response.ok) {
@@ -169,7 +179,7 @@ export async function POST(request: Request) {
 
       // Parse the response
       const data = await response.json()
-      console.log("Successfully received and parsed response from OpenRouter API")
+      console.log("Successfully received and parsed response from Nebius API")
 
       // Check if we have the expected data structure
       if (!data.choices || !data.choices[0] || !data.choices[0].message) {
@@ -183,17 +193,33 @@ export async function POST(request: Request) {
         })
       }
 
-      // Return the successful response
-      const cleanedMessage = data.choices[0].message.content.replace(
+      // Extract the message content
+      let messageContent = ""
+      if (data.choices[0].message.content) {
+        if (Array.isArray(data.choices[0].message.content)) {
+          // Handle array format
+          messageContent = data.choices[0].message.content
+            .filter(item => item.type === "text")
+            .map(item => item.text)
+            .join("")
+        } else {
+          // Handle string format
+          messageContent = data.choices[0].message.content
+        }
+      }
+
+      // Clean up the message content
+      const cleanedMessage = messageContent.replace(
         /<[Tt]hink(?:ing)?>[\s\S]*?<\/[Tt]hink(?:ing)?>/g,
         "",
-      )
+      ).trim()
+
       console.log("Returning successful response to client")
       return safeJsonResponse({
         success: true,
-        message: cleanedMessage,
+        message: cleanedMessage || "I'm here to help! How can I assist you today?",
       })
-    } catch (apiError) {
+    } catch (apiError: any) {
       console.error("API error:", apiError)
 
       // If it's an abort error (timeout), return a specific message

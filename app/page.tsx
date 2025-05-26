@@ -26,13 +26,13 @@ export default function Home() {
         <FloatingMemes />
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-3xl mx-auto text-center">
-            <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold mb-4 md:mb-6 text-[#9FFFE0]">
-              Welcome to Neurox – Where AI Meets Relaxation
+            <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-4 md:mb-6 text-[#9FFFE0]">
+              Welcome to Hyper Neurox – Where AI Meets Relaxation
             </h1>
-            <p className="text-base sm:text-lg md:text-xl mb-6 md:mb-8 text-[#9FFFE0]/70">
-              Neurox is a cutting-edge AI-powered platform designed to help users unwind from crypto market stress. By
-              blending AI-generated art, entertainment, and mental well-being, Neurox provides a unique space where
-              users can chill, have fun, and explore AI-powered creativity.
+            <p className="text-base sm:text-lg md:text-xl mb-6 md:mb-8 text-[#9FFFE0]/80 max-w-3xl mx-auto">
+              Hyper Neurox is a cutting-edge AI-powered platform designed to help users unwind from crypto market stress. By
+              blending AI-generated art, entertainment, and mental well-being, Hyper Neurox provides a unique space where
+              technology meets tranquility.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button
@@ -64,9 +64,9 @@ export default function Home() {
       <section id="about" className="py-10 scroll-mt-20">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center mb-6 md:mb-8">
-            <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold mb-3 md:mb-4 text-[#9FFFE0]">What is Neurox?</h2>
-            <p className="text-base md:text-lg text-[#9FFFE0]/70">
-              Neurox is an innovative platform that merges artificial intelligence with mental wellness and blockchain
+            <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold mb-3 md:mb-4 text-[#9FFFE0]">What is Hyper Neurox?</h2>
+            <p className="text-base md:text-lg mb-6 md:mb-8 text-[#9FFFE0]/70 max-w-3xl mx-auto">
+              Hyper Neurox is an innovative platform that merges artificial intelligence with mental wellness and blockchain
               technology. It is designed for users who need a break from the volatility of the crypto market, offering
               AI-powered image generation, stress-relief activities, and a fun, interactive experience. Our goal is to
               create a digital sanctuary where users can relax, generate images, and engage with a vibrant community.
@@ -159,10 +159,10 @@ export default function Home() {
           </h2>
           <div className="bg-[#0B1211]/40 p-4 md:p-6 rounded-xl border border-[#9FFFE0]/30 backdrop-blur-sm">
             <p className="text-[#9FFFE0]/70 mb-6">
-              Take a break from crypto stress with these relaxing mini-games designed to calm your mind.
-            </p>
-            <div className="flex-grow">
-              <MiniGames />
+                  Take a break from crypto stress with these relaxing mini-games designed to calm your mind.
+                </p>
+                <div className="flex-grow">
+                  <MiniGames />
             </div>
           </div>
         </div>
@@ -248,11 +248,11 @@ export default function Home() {
                 </div>
                 <div className="ml-14 space-y-2">
                   <p className="text-[#9FFFE0]/70 flex items-center">
-                    <Check className="h-4 w-4 text-[#9FFFE0] mr-2" /> Community building (Discord, Telegram, X,
-                    Wrapcast)
+                    <Check className="h-4 w-4 text-[#9FFFE0] mr-2" /> Community building (Telegram, X
+                )
                   </p>
                   <p className="text-[#9FFFE0]/70 flex items-center">
-                    <Rocket className="h-4 w-4 text-[#9FFFE0] mr-2" /> Token Launch through FactoryB.AI on BNB chain
+                    <Rocket className="h-4 w-4 text-[#9FFFE0] mr-2" /> Token Launch through LiquidLaunch on Hyper Liquid
                   </p>
                   <p className="text-[#9FFFE0]/70 flex items-center">
                     <Rocket className="h-4 w-4 text-[#9FFFE0] mr-2" />
@@ -340,7 +340,7 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold mb-4 md:mb-6 text-[#9FFFE0]">
-              Join the Neurox Movement!
+              Join the Hyper Neurox Movement!
             </h2>
             <p className="text-base md:text-lg mb-6 md:mb-8 text-[#9FFFE0]/70">
               Be part of our growing community and stay updated on the latest developments, features, and token news.
@@ -349,7 +349,7 @@ export default function Home() {
               <Button
                 variant="outline"
                 className="border-[#9FFFE0] text-[#9FFFE0] hover:bg-[#9FFFE0]/20 text-sm md:text-base"
-                onClick={() => window.open("https://x.com/NeuroxAi?t=1s-ptKYFmaEHoJiFcTKh-w&s=08", "_blank")}
+                onClick={() => window.open("https://x.com/Hyper_Neurox", "_blank")}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -372,7 +372,7 @@ export default function Home() {
               <Button
                 variant="outline"
                 className="border-[#9FFFE0] text-[#9FFFE0] hover:bg-[#9FFFE0]/20 text-sm md:text-base"
-                onClick={() => window.open("https://t.me/NEUROXBNB", "_blank")}
+                onClick={() => window.open("https://t.me/hyper_neuroX", "_blank")}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

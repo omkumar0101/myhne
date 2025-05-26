@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react"
 import { Button } from "@/components/ui/button"
-import { Loader2, Sparkles, Send, AlertCircle, Coins, Download, Trash2, Share2 } from "lucide-react"
+import { Loader2, Sparkles, Send, AlertCircle, Download, Trash2, Share2 } from "lucide-react"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 
 // Key for storing generated images in localStorage
@@ -13,8 +13,6 @@ export default function AIImageGenerator() {
   const [isGenerating, setIsGenerating] = useState(false)
   const [generatedImages, setGeneratedImages] = useState<string[]>([])
   const [error, setError] = useState<string | null>(null)
-  const [credits, setCredits] = useState<number>(0)
-  const [needsCredits, setNeedsCredits] = useState(false)
   const generatorRef = useRef<HTMLDivElement>(null)
   const [imageUrl, setImageUrl] = useState<string | null>(null)
   const [isSharing, setIsSharing] = useState(false)
@@ -34,11 +32,6 @@ export default function AIImageGenerator() {
     }
   }, [])
 
-  const handleCreditsChange = (newCredits: number) => {
-    setCredits(newCredits)
-    setNeedsCredits(newCredits <= 0)
-  }
-
   // Save generated images to localStorage
   const saveGeneratedImages = (images: string[]) => {
     try {
@@ -51,16 +44,8 @@ export default function AIImageGenerator() {
   const generateImage = async () => {
     if (!prompt.trim()) return
 
-    // Check if user has credits
-    if (credits <= 0) {
-      setNeedsCredits(true)
-      setError("You need to purchase more credits to generate images")
-      return
-    }
-
     setIsGenerating(true)
     setError(null)
-    setNeedsCredits(false)
 
     try {
       // Use the actual API
@@ -116,41 +101,6 @@ export default function AIImageGenerator() {
       saveGeneratedImages(updatedImages) // Save to localStorage
       setImageUrl(imageUrl)
 
-      // Deduct a credit
-      setCredits((prev) => {
-        const newCredits = prev - 1
-        // Update localStorage
-        try {
-          const walletAddress = localStorage.getItem("connectedWalletAddress")
-          if (walletAddress) {
-            const storedCreditsData = localStorage.getItem("userCredits")
-            if (storedCreditsData) {
-              const allUserCredits = JSON.parse(storedCreditsData)
-              const existingUserIndex = allUserCredits.findIndex(
-                (user: any) => user.address.toLowerCase() === walletAddress.toLowerCase(),
-              )
-              if (existingUserIndex >= 0) {
-                allUserCredits[existingUserIndex].credits = newCredits
-                allUserCredits[existingUserIndex].lastUpdated = Date.now()
-                localStorage.setItem("userCredits", JSON.stringify(allUserCredits))
-              }
-            }
-          } else {
-            // Handle anonymous user
-            localStorage.setItem(
-              "anonymousUserCredits",
-              JSON.stringify({
-                credits: newCredits,
-                lastUpdated: Date.now(),
-              }),
-            )
-          }
-        } catch (error) {
-          console.error("Error updating credits:", error)
-        }
-        return newCredits
-      })
-
       setPrompt("")
     } catch (err) {
       console.error("Error generating image:", err)
@@ -169,7 +119,7 @@ export default function AIImageGenerator() {
   const downloadImage = (imageUrl: string, index: number) => {
     const link = document.createElement("a")
     link.href = imageUrl
-    link.download = `neurox-image-${index}.webp`
+    link.download = `hyper-neurox-image-${index}.webp`
     document.body.appendChild(link)
     link.click()
     document.body.removeChild(link)
@@ -212,32 +162,32 @@ export default function AIImageGenerator() {
         try {
           // Convert data URL directly to blob without using fetch
           const blob = dataURLtoBlob(imageUrl)
-          const file = new File([blob], "neurox-image.webp", { type: "image/webp" })
+          const file = new File([blob], "hyper-neurox-image.webp", { type: "image/webp" })
 
           // Check if we can share files
           if (navigator.canShare({ files: [file] })) {
             await navigator.share({
               files: [file],
-              title: "Check out this AI-generated image from NEUROX!",
-              text: "Generated with NEUROX AI",
+              title: "Check out this AI-generated image from HYPER NEUROX!",
+              text: "Generated with HYPER NEUROX AI",
             })
           } else {
             // Fallback to WhatsApp web with text only
-            window.open(`https://wa.me/?text=Check out this AI-generated image from NEUROX!`, "_blank")
+            window.open(`https://wa.me/?text=Check out this AI-generated image from HYPER NEUROX!`, "_blank")
           }
         } catch (err) {
           console.error("Error sharing:", err)
           // Fallback to WhatsApp web
-          window.open(`https://wa.me/?text=Check out this AI-generated image from NEUROX!`, "_blank")
+          window.open(`https://wa.me/?text=Check out this AI-generated image from HYPER NEUROX!`, "_blank")
         }
       } else {
         // Fallback to WhatsApp web
-        window.open(`https://wa.me/?text=Check out this AI-generated image from NEUROX!`, "_blank")
+        window.open(`https://wa.me/?text=Check out this AI-generated image from HYPER NEUROX!`, "_blank")
       }
     } catch (error) {
       console.error("Error in shareToWhatsApp:", error)
       // Final fallback
-      window.open(`https://wa.me/?text=Check out this AI-generated image from NEUROX!`, "_blank")
+      window.open(`https://wa.me/?text=Check out this AI-generated image from HYPER NEUROX!`, "_blank")
     } finally {
       setIsSharing(false)
     }
@@ -255,16 +205,6 @@ export default function AIImageGenerator() {
         <Alert variant="destructive" className="mb-4">
           <AlertCircle className="h-4 w-4" />
           <AlertDescription>{error}</AlertDescription>
-        </Alert>
-      )}
-
-      {needsCredits && (
-        <Alert className="mb-4 bg-blue-900/30 border-blue-800/50">
-          <Coins className="h-4 w-4 text-blue-400" />
-          <AlertDescription className="text-blue-300">
-            You need to purchase more credits to generate images. Connect your wallet and buy credits with NEUROX
-            tokens.
-          </AlertDescription>
         </Alert>
       )}
 
@@ -291,7 +231,7 @@ export default function AIImageGenerator() {
 
             <Button
               onClick={generateImage}
-              disabled={isGenerating || !prompt.trim() || credits <= 0}
+              disabled={isGenerating || !prompt.trim()}
               className="bg-[#9FFFE0] hover:bg-[#7FFFD0] text-[#0B1211] w-full py-6 text-base md:text-lg font-medium"
             >
               {isGenerating ? (
@@ -302,9 +242,7 @@ export default function AIImageGenerator() {
               ) : (
                 <>
                   <Sparkles className="mr-2 h-5 w-5" />
-                  {credits > 0
-                    ? `Generate Image (${credits} credit${credits !== 1 ? "s" : ""} left)`
-                    : "Purchase Credits to Generate"}
+                  Generate Funny Image
                 </>
               )}
             </Button>

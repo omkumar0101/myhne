@@ -154,8 +154,10 @@ export function WalletProvider({ children }: { children: ReactNode }) {
           window.ethereum.on("chainChanged", handleChainChanged)
 
           return () => {
+            if (window.ethereum) {
             window.ethereum.removeListener("accountsChanged", handleAccountsChanged)
             window.ethereum.removeListener("chainChanged", handleChainChanged)
+            }
           }
         } catch (err) {
           console.error("Error checking MetaMask connection:", err)
@@ -218,7 +220,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
 
         // This will attempt to open the MetaMask app with a return URL
         // Using the universal link format for better compatibility
-        window.location.href = `https://metamask.app.link/dapp/${window.location.host}${window.location.pathname}?utm_source=neurox`
+        window.location.href = `https://metamask.app.link/dapp/${window.location.host}${window.location.pathname}?utm_source=hyper-neurox`
       }
       return
     }

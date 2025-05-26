@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -8,11 +8,8 @@ import { ArrowUp, ArrowDown, RefreshCw, Brain, Timer } from "lucide-react"
 
 export default function MiniGames() {
   return (
-    <Tabs defaultValue="price-predictor" className="w-full">
-      <TabsList className="grid w-full grid-cols-3 bg-[#0B1211] text-xs sm:text-sm">
-        <TabsTrigger value="price-predictor" className="py-1.5">
-          Price Predictor
-        </TabsTrigger>
+    <Tabs defaultValue="memory-match" className="w-full">
+      <TabsList className="grid w-full grid-cols-2 bg-[#0B1211] text-xs sm:text-sm">
         <TabsTrigger value="memory-match" className="py-1.5">
           Memory Match
         </TabsTrigger>
@@ -20,10 +17,6 @@ export default function MiniGames() {
           Breathing Exercise
         </TabsTrigger>
       </TabsList>
-
-      <TabsContent value="price-predictor" className="mt-4 sm:mt-6">
-        <PricePredictor />
-      </TabsContent>
 
       <TabsContent value="memory-match" className="mt-4 sm:mt-6">
         <MemoryMatch />
@@ -33,147 +26,6 @@ export default function MiniGames() {
         <BreathingExercise />
       </TabsContent>
     </Tabs>
-  )
-}
-
-// Price Predictor Game
-function PricePredictor() {
-  const [currentPrice, setCurrentPrice] = useState(25000)
-  const [nextPrice, setNextPrice] = useState(0)
-  const [prediction, setPrediction] = useState<"up" | "down" | null>(null)
-  const [result, setResult] = useState<"correct" | "wrong" | null>(null)
-  const [score, setScore] = useState(0)
-  const [streak, setStreak] = useState(0)
-  const [isPlaying, setIsPlaying] = useState(false)
-  const [timeLeft, setTimeLeft] = useState(10)
-
-  // Generate a random price movement
-  const generateNextPrice = () => {
-    const movement = Math.random() > 0.5 ? 1 : -1
-    const amount = Math.floor(Math.random() * 1000) + 100
-    return currentPrice + movement * amount
-  }
-
-  // Start a new round
-  const startRound = () => {
-    setNextPrice(0)
-    setPrediction(null)
-    setResult(null)
-    setIsPlaying(true)
-    setTimeLeft(10)
-  }
-
-  // Make a prediction
-  const makePrediction = (direction: "up" | "down") => {
-    if (!isPlaying) return
-
-    setPrediction(direction)
-    const next = generateNextPrice()
-    setNextPrice(next)
-
-    const isCorrect = (direction === "up" && next > currentPrice) || (direction === "down" && next < currentPrice)
-
-    setResult(isCorrect ? "correct" : "wrong")
-
-    if (isCorrect) {
-      setScore((prev) => prev + 10)
-      setStreak((prev) => prev + 1)
-    } else {
-      setStreak(0)
-    }
-
-    setIsPlaying(false)
-    setCurrentPrice(next)
-  }
-
-  // Timer effect
-  useEffect(() => {
-    if (!isPlaying) return
-
-    const timer = setInterval(() => {
-      setTimeLeft((prev) => {
-        if (prev <= 1) {
-          clearInterval(timer)
-          makePrediction(Math.random() > 0.5 ? "up" : "down")
-          return 0
-        }
-        return prev - 1
-      })
-    }, 1000)
-
-    return () => clearInterval(timer)
-  }, [isPlaying])
-
-  return (
-    <Card className="bg-[#0B1211]/60 border-[#9FFFE0] backdrop-blur-sm">
-      <CardContent className="pt-6">
-        <div className="text-center mb-6">
-          <h3 className="text-xl font-bold text-[#9FFFE0] mb-2">Crypto Price Predictor</h3>
-          <p className="text-[#9FFFE0]/70">Predict if the price will go up or down in the next 10 seconds!</p>
-        </div>
-
-        <div className="flex justify-between items-center mb-6">
-          <div>
-            <p className="text-sm text-[#9FFFE0]/70">Score</p>
-            <p className="text-2xl font-bold text-[#9FFFE0]">{score}</p>
-          </div>
-          <div>
-            <p className="text-sm text-[#9FFFE0]/70">Current Price</p>
-            <p className="text-2xl font-bold text-[#9FFFE0]">${currentPrice.toLocaleString()}</p>
-          </div>
-          <div>
-            <p className="text-sm text-[#9FFFE0]/70">Streak</p>
-            <p className="text-2xl font-bold text-[#9FFFE0]">{streak}🔥</p>
-          </div>
-        </div>
-
-        {nextPrice > 0 && (
-          <div className="mb-6 text-center">
-            <p className="text-sm text-[#9FFFE0]/70">Next Price</p>
-            <p className={`text-2xl font-bold ${nextPrice > currentPrice ? "text-green-500" : "text-red-500"}`}>
-              ${nextPrice.toLocaleString()}
-              {nextPrice > currentPrice ? " ↑" : " ↓"}
-            </p>
-          </div>
-        )}
-
-        {result && (
-          <div
-            className={`mb-6 p-3 rounded-md text-center ${result === "correct" ? "bg-[#0B1211]/30 text-[#9FFFE0]" : "bg-[#0B1211]/30 text-[#9FFFE0]"}`}
-          >
-            {result === "correct" ? "Correct prediction! +10 points" : "Wrong prediction! Streak reset"}
-          </div>
-        )}
-
-        {isPlaying ? (
-          <div className="mb-6">
-            <div className="flex justify-center items-center gap-4">
-              <Button onClick={() => makePrediction("up")} className="flex-1 bg-[#9FFFE0] hover:bg-[#7FFFD0] text-[#0B1211]">
-                <ArrowUp className="mr-2 h-4 w-4" />
-                Up
-              </Button>
-              <div className="text-center">
-                <Timer className="h-5 w-5 mx-auto mb-1 text-yellow-400" />
-                <p className="text-lg font-bold text-yellow-400">{timeLeft}s</p>
-              </div>
-              <Button onClick={() => makePrediction("down")} className="flex-1 bg-[#9FFFE0] hover:bg-[#7FFFD0] text-[#0B1211]">
-                <ArrowDown className="mr-2 h-4 w-4" />
-                Down
-              </Button>
-            </div>
-          </div>
-        ) : (
-          <Button onClick={startRound} className="w-full bg-[#9FFFE0] hover:bg-[#7FFFD0] text-[#0B1211]">
-            <RefreshCw className="mr-2 h-4 w-4" />
-            {result ? "Next Round" : "Start Game"}
-          </Button>
-        )}
-
-        <p className="text-xs text-[#9FFFE0]/70 mt-4 text-center">
-          Disclaimer: This is just a game and not financial advice. Prices are simulated.
-        </p>
-      </CardContent>
-    </Card>
   )
 }
 
@@ -283,16 +135,16 @@ function MemoryMatch() {
               </Button>
             </div>
 
-            <div className="grid grid-cols-4 gap-2 mb-4">
+            <div className="grid grid-cols-4 gap-3 mb-4 max-w-md mx-auto">
               {cards.map((card) => (
                 <div
                   key={card.id}
                   onClick={() => handleCardClick(card.id)}
-                  className={`aspect-square rounded-md cursor-pointer transition-all duration-300 transform ${
+                  className={`aspect-square rounded-lg cursor-pointer transition-all duration-300 transform hover:scale-105 ${
                     card.flipped || card.matched ? "bg-[#9FFFE0] rotate-y-180" : "bg-[#0B1211]/80 hover:bg-[#0B1211]/70"
-                  } ${card.matched ? "opacity-70" : "opacity-100"} flex items-center justify-center`}
+                  } ${card.matched ? "opacity-70" : "opacity-100"} flex items-center justify-center border-2 border-[#9FFFE0]/30 min-h-[60px] sm:min-h-[80px]`}
                 >
-                  {(card.flipped || card.matched) && <div className="text-2xl">{card.emoji}</div>}
+                  {(card.flipped || card.matched) && <div className="text-3xl sm:text-4xl">{card.emoji}</div>}
                 </div>
               ))}
             </div>

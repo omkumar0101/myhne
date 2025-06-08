@@ -9,7 +9,7 @@ export default function TokenBuying() {
   const [copied, setCopied] = useState(false)
 
   // Token details
-  const tokenAddress = "0x160d58d26ca6036e5c2c4e8daa1a5758e7116396"
+  const tokenAddress = "Coming Soon"
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(tokenAddress)
@@ -19,7 +19,7 @@ export default function TokenBuying() {
 
   const buyToken = () => {
     // Open external link for buying tokens
-    window.open("https://dev.liquidlaunch.app/token/0x160d58d26ca6036e5c2c4e8daa1a5758e7116396", "_blank")
+    window.open("Coming Soon", "_blank")
   }
 
   return (

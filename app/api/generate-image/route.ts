@@ -8,11 +8,9 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Prompt is required" }, { status: 400 })
     }
 
-    // Use the provided API key directly
-    const NEBIUS_API_KEY = "eyJhbGciOiJIUzI1NiIsImtpZCI6IlV6SXJWd1h0dnprLVRvdzlLZWstc0M1akptWXBvX1VaVkxUZlpnMDRlOFUiLCJ0eXAiOiJKV1QifQ.eyJzdWIiOiJnb29nbGUtb2F1dGgyfDExNDgwMDE2MTczODc2Mjk5ODk3MyIsInNjb3BlIjoib3BlbmlkIG9mZmxpbmVfYWNjZXNzIiwiaXNzIjoiYXBpX2tleV9pc3N1ZXIiLCJhdWQiOlsiaHR0cHM6Ly9uZWJpdXMtaW5mZXJlbmNlLmV1LmF1dGgwLmNvbS9hcGkvdjIvIl0sImV4cCI6MTkwNTk1ODE1MywidXVpZCI6IjY1ZmFjMWI1LWRhNGQtNDdmZi05NWZiLTg0NTM5NGQzNzRkNSIsIm5hbWUiOiJVbm5hbWVkIGtleSIsImV4cGlyZXNfYXQiOiIyMDMwLTA1LTI1VDE2OjQ5OjEzKzAwMDAifQ.WZYPmsk-pZQGhkMxwkVhzzipeorPQ-0uW22ut6uUow0"
+    const NEBIUS_API_KEY = process.env.NEBIUS_API_KEY || ""
 
     try {
-      // Use the exact configuration provided by the user
       const response = await fetch("https://api.studio.nebius.com/v1/images/generations", {
         method: "POST",
         headers: {

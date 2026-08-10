@@ -46,7 +46,7 @@ const FALLBACK_RESPONSES = [
 ]
 
 // Nebius API configuration
-const NEBIUS_API_KEY = "eyJhbGciOiJIUzI1NiIsImtpZCI6IlV6SXJWd1h0dnprLVRvdzlLZWstc0M1akptWXBvX1VaVkxUZlpnMDRlOFUiLCJ0eXAiOiJKV1QifQ.eyJzdWIiOiJnb29nbGUtb2F1dGgyfDExNDgwMDE2MTczODc2Mjk5ODk3MyIsInNjb3BlIjoib3BlbmlkIG9mZmxpbmVfYWNjZXNzIiwiaXNzIjoiYXBpX2tleV9pc3N1ZXIiLCJhdWQiOlsiaHR0cHM6Ly9uZWJpdXMtaW5mZXJlbmNlLmV1LmF1dGgwLmNvbS9hcGkvdjIvIl0sImV4cCI6MTkwNTk1ODYxNSwidXVpZCI6ImQxN2QyNGUxLTU4MGQtNDIyOC04NDJkLTU0MWZjOWQ0ZjI5YyIsIm5hbWUiOiJjaGF0IiwiZXhwaXJlc19hdCI6IjIwMzAtMDUtMjVUMTY6NTY6NTUrMDAwMCJ9.bVFOx3wQbCbDlMFK74bIkdYno7u5rkIEW0x0xUDWLGY"
+const NEBIUS_API_KEY = process.env.NEBIUS_API_KEY || ""
 const NEBIUS_BASE_URL = "https://api.studio.nebius.com/v1/"
 
 export async function POST(request: Request) {
